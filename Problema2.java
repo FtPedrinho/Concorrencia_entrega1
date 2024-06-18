@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -11,41 +12,34 @@ public class Main {
             this.quantidade = quantidade;
         }
 
-        public void passarPonte(String direcao, String nome) throws InterruptedException{
-            if (direcao == "direita"){
+        public void passarPonte(String direcao, String nome) throws InterruptedException {
+            if (Objects.equals(direcao, "direita")){
                 System.out.println(nome + " quer atravessar para a direita.");
                 lock.lock();
-                try{
-                    quantidade += 1;
-                    System.out.println(nome + " está atravessando a ponte para a direita...");
-                    if (quantidade == 1){
-                        System.out.println("Apenas 1 carro na ponte");
-                    }else{
-                        System.out.println("Tem " + quantidade +" na ponte!!!");
-                    }
+                quantidade += 1;
+                System.out.println(nome + " está atravessando a ponte para a direita...");
+                if (quantidade == 1){
+                    System.out.println("Apenas 1 carro na ponte");
+                }else{
+                    System.out.println("Tem " + quantidade +" na ponte!!!");
                 }
-                finally{
-                    Thread.sleep(1000);
-                    quantidade -= 1;
-                    lock.unlock();
-                }
+                Thread.sleep(1000);
+                quantidade -= 1;
+                lock.unlock();
             } else{
                 System.out.println(nome + " quer atravessar para a esquerda.");
                 lock.lock();
-                try{
-                    quantidade += 1;
-                    System.out.println(nome + " está atravessando a ponte para a esquerda...");
-                    if (quantidade == 1){
-                        System.out.println("Apenas 1 carro na ponte");
-                    }else{
-                        System.out.println("Tem " + quantidade +" na ponte!!!");
-                    }
+                quantidade += 1;
+                System.out.println(nome + " está atravessando a ponte para a esquerda...");
+                if (quantidade == 1){
+                    System.out.println("Apenas 1 carro na ponte");
+                }else{
+                    System.out.println("Tem " + quantidade +" na ponte!!!");
                 }
-                finally{
-                    Thread.sleep(1000);
-                    quantidade -= 1;
-                    lock.unlock();
-                }
+                Thread.sleep(1000);
+                quantidade -= 1;
+                lock.unlock();
+
             }
         }
     }
