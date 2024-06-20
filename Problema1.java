@@ -68,7 +68,6 @@ public class Main {
                 throw new RuntimeException(e);
             }
         }
-
     }
 
 // Main com a criação do banco, prints iniciais e finais e criação das Threads dos Clientes
