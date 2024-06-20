@@ -2,15 +2,19 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Main {
+    
+    // Classe do banco com uma variável manipulável chamada Saldo
     public static class BancoConta{
         private int saldo;
 
+        // Criação do Lock | Em casos de não sincronização, retiram-se os locks e unlocks entre comentários
         private final Lock lock = new ReentrantLock();
 
         public BancoConta(int saldo){
             this.saldo = saldo;
         }
 
+        // Função para manipular o saldo que puxa o valor, o comando entre "retirar" e "depositar" e o nome do agente
         public void operacaoConta(int valor, String comando, String nome) throws InterruptedException{
             if (comando == "depositar"){
                 System.out.println(nome + " quer depositar " + valor);
@@ -42,6 +46,7 @@ public class Main {
         }
     }
 
+    // Criação da classe dos Clientes, chamda de Operação | Eles são constituidos pelo nome, banco, comando "retirar" e "depositar" e o valor trabalhado
     public static class Operacao implements Runnable{
         private BancoConta conta;
         private int valor;
@@ -55,6 +60,7 @@ public class Main {
             this.nome = nome;
         }
 
+        // Função que liga os Clientes ao Banco
         public void run(){
             try{
                 conta.operacaoConta(valor, comando, nome);
@@ -65,7 +71,7 @@ public class Main {
 
     }
 
-
+// Main com a criação do banco, prints iniciais e finais e criação das Threads dos Clientes
     public static void main(String[] args) throws InterruptedException{
         BancoConta ContaFamilia = new BancoConta(0);
 
@@ -99,6 +105,7 @@ public class Main {
         Thread Sobrinho_Thread = new Thread(Sobrinho);
         Sobrinho_Thread.start();
 
+        // Ordenando prints e ordenando respostas
         Pai_Thread.join();
         Mae_Thread.join();
         Tio_Thread.join();
