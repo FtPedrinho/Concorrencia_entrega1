@@ -3,6 +3,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Main {
+
+    // Criação da classe da ponte com a variável que servirá como semáforo chamada Quantidade
     public static class Ponte{
         private int quantidade;
 
@@ -12,6 +14,9 @@ public class Main {
             this.quantidade = quantidade;
         }
 
+        // Criação da função de passar pela ponte | Ela puxa os parâmetros dos carros: nome e direção
+        // Em casos de Sincronização, as Threads vão dar lock e proibir que a quantidade máxima na ponte ultrapasse 1.
+        // Em casos sem sincronização, as Threads não vão ativar locks e unlocks, permitindo que mais de uma Thread manipule a quantidade na ponte ao mesmo tempo, causando acidentes
         public void passarPonte(String direcao, String nome) throws InterruptedException {
             if (Objects.equals(direcao, "direita")){
                 System.out.println(nome + " quer atravessar para a direita.");
@@ -44,6 +49,7 @@ public class Main {
         }
     }
 
+    // Criação da classe dos carros, contendo a ponte relacionada, o comando "direita" ou "esquerda" e o nome do carro
     public static class Carro implements Runnable{
         private Ponte ponte;
         private String comando;
@@ -55,6 +61,7 @@ public class Main {
             this.nome = nome;
         }
 
+        // Função que liga os carros à ponte e ocorrem as passagens
         public void run(){
             try{
                 ponte.passarPonte(comando, nome);
@@ -66,6 +73,7 @@ public class Main {
     }
 
 
+    // Main contendo a criação da ponte, das Threads dos carros e os prints finais e iniciais.
     public static void main(String[] args) throws InterruptedException{
         Ponte Ponte1 = new Ponte(0);
 
@@ -109,6 +117,7 @@ public class Main {
         Kwid_Thread.start();
         Macqueen_Thread.start();
 
+        // Ordenando respostas e prints na tela
         Moto_Thread.join();
         Carro_Thread.join();
         Limusine_Thread.join();
