@@ -7,7 +7,7 @@ public class Main {
     public static class BancoConta{
         private int saldo;
 
-        // Criação do Lock | Em casos de não sincronização, retiram-se os locks e unlocks entre comentários
+        // Criação do Lock para que apenas uma Thread manipule a variável por vez
         private final Lock lock = new ReentrantLock();
 
         public BancoConta(int saldo){
